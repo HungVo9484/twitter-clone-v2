@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core';
 
 import Welcome from './pages/Welcome';
 import Main from './ui/Main';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import AuthContext from '../hooks/auth-context';
+import { Toggle } from './ui/common/Toggle';
+
 
 function App() {
   const theme = useTheme();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, themeOption, setTheme } = useContext(AuthContext);
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  const authHandler = () => {
-    setIsAuthenticated(!isAuthenticated);
-  }
 
   const toggleDrawerHandler = () => {
     setOpenDrawer(!openDrawer);
@@ -25,12 +25,12 @@ function App() {
   if (isAuthenticated) {
     routes = (
       <Main
-        openDrawer={ openDrawer }
-        toggleDrawerHandler={ toggleDrawerHandler }
+        openDrawer={openDrawer}
+        toggleDrawerHandler={toggleDrawerHandler}
       >
         <Switch>
           <Route path='/home' exact>
-            <Home toggleDrawerHandler={ toggleDrawerHandler } />
+            <Home toggleDrawerHandler={toggleDrawerHandler} />
           </Route>
           <Route path='/username' exact>
             <Profile />
@@ -42,20 +42,24 @@ function App() {
     routes = (
       <Switch>
         <Route path='/' exact>
-          <Welcome setAuth={ authHandler } />
+          <Welcome />
         </Route>
         <Route path='/'>
           <Redirect to='/' />
         </Route>
       </Switch>
-
     );
   }
 
   return (
-    <div style={ { backgroundColor: theme.palette.common.background } }>
-      { routes }
-    </div>
+    <ThemeProvider theme={themeOption}>
+      <div
+        style={{ backgroundColor: themeOption.palette.common.background }}
+      >
+        <Toggle isActive={themeOption.id === 'dark'} onToggle={setTheme} />
+        {routes}
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import SideBar from "./SideBar";
+import SideBar from "./sideBar/SideBar";
 import Widgets from "./Widgets";
 import DrawerMobile from "./DrawerMobile";
 

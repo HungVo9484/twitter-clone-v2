@@ -11,11 +11,16 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import twitterLogo from '../../../assets/twitterLogo.svg';
+import { ReactComponent as Logo } from '../../../assets/twitterLogo.svg';
 
 
 const CssTextField = withStyles((theme) => ({
   root: {
+    '& .MuiInputBase-root': {
+      color: theme.palette.common.fontColor,
+      fontSize: '1.2rem',
+      fontWeight: 600
+    },
     '& .MuiInputLabel-root': {
       color: theme.palette.common.fontGrayColor
     },
@@ -30,10 +35,10 @@ const CssTextField = withStyles((theme) => ({
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: theme.palette.common.fontGrayColor,
+        borderColor: theme.palette.common.borderTextField,
       },
       '&:hover fieldset': {
-        borderColor: theme.palette.common.fontGrayColor,
+        borderColor: theme.palette.common.borderTextField,
       },
       '&.Mui-focused fieldset': {
         borderColor: theme.palette.primary.main,
@@ -57,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logoImg: {
     width: '100%',
+    height: '100%',
+    '& path': {
+      fill: theme.palette.common.logoColor,
+    },
   },
   titleSignupDialog: {
     marginBottom: '1.5em'
@@ -84,6 +93,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2em',
     marginBottom: '2em'
   },
+  button: {
+    ...theme.typography.button,
+    height: 49,
+    width: 379,
+    color: 'white'
+  }
 }));
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -126,8 +141,6 @@ export default function Signup(props) {
     }, 2000)
   };
 
-console.log(props);
-
   return (
     <Dialog
       open={ props.openSignup }
@@ -156,17 +169,13 @@ console.log(props);
           >
             { loading ? <CircularProgress size={ 40 } /> :
               <Grid item className={ classes.logoDialogItem }>
-                <img
-                  src={ twitterLogo }
-                  alt='twitter logo'
-                  className={ classes.logoImg }
-                />
+                <Logo className={ classes.logoImg } />
               </Grid> }
           </Grid>
           <Grid item
             className={ classes.titleSignupDialog }
           >
-            <Typography variant='h5'>
+            <Typography variant='h4'>
               Create your account
             </Typography>
           </Grid>
@@ -179,8 +188,8 @@ console.log(props);
               id='name'
               variant='outlined'
               className={ classes.textField }
-              error
-              helperText={ true ? 'Please Enter the Name' : undefined }
+              // error
+              // helperText={ true ? 'Please Enter the Name' : undefined }
             />
             <CssTextField
               label='Email'
@@ -330,8 +339,8 @@ console.log(props);
               variant='contained'
               color='primary'
               disableElevation
+              disableRipple
               className={ classes.button }
-              style={ { color: 'white' } }
               onClick={ signupHandler }
             >
               Register

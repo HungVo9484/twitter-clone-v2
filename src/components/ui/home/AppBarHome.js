@@ -6,16 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
-import Tooltip from '@material-ui/core/Tooltip';
-
-const CssTooltip = withStyles(theme => ({
-    tooltip: {
-        backgroundColor: theme.palette.common.tooltipBackground
-    },
-    popper: {
-        marginTop: '-0.5em'
-    }
-}))(Tooltip);
+import CssTooltip from '../common/CssTooltip';
 
 const useStyles = makeStyles((theme) => ({
     homeAppBarContainer: {

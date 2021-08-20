@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
 
-import imageCover from '../../../assets/picture.png';
 import bikini from '../../../assets/bikini.jpg';
 
 const ImageCover = styled.div`

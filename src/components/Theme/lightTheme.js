@@ -8,38 +8,30 @@ const LIGHT_GRAY = '#AAB8C2';
 const EXTRA_LIGHT_GRAY = '#E1E8ED';
 const EXTRA_EXTRA_LIGHT_GRAY = '#F5F8FA';
 const WHITE = '#FFFFFF';
+const FONT_FAMILY = 'Open Sans'
 
 //TODO ----------Light Theme--------------------
 
-const lightTheme = {
-    backgroundColor: WHITE,
-    fontColor: BLACK,
-    fontGray: DARK_GRAY,
-    borderTextField: BLACK,
-    homeBorder: EXTRA_LIGHT_GRAY,
-    backDrop: 'rgba(0, 131, 179, 0.198)',
-    tooltipBackground: 'rgba(101, 119, 134, 0.9)',
-    searchBackgroundColor: EXTRA_LIGHT_GRAY,
-    trendsColor: EXTRA_EXTRA_LIGHT_GRAY,
-    drawerBackground: WHITE
+// eslint-disable-next-line
+const themeOption = {
+  backgroundColor: WHITE,
+  logoColor: '#1DA1F2',
+  fontColor: '#0F1419',
+  fontGray: DARK_GRAY,
+  borderTextField: LIGHT_GRAY,
+  homeBorder: EXTRA_LIGHT_GRAY,
+  backDrop: 'rgba(83, 100, 113, 0.3)',
+  tooltipBackground: 'rgba(101, 119, 134, 0.9)',
+  searchBackgroundColor: EXTRA_LIGHT_GRAY,
+  trendsColor: EXTRA_EXTRA_LIGHT_GRAY,
+  drawerBackground: WHITE,
+  inputBorderColor: 'rgb(212, 211, 211)',
+  labelFontColor: '#405b77',
+  body1FontColor: '#0F1419'
 };
 
-const darkTheme = {
-    backgroundColor: 'black',
-    fontColor: EXTRA_LIGHT_GRAY,
-    fontGray: DARK_GRAY,
-    borderTextField: LIGHT_GRAY,
-    homeBorder: 'rgba(101, 119, 134, 0.3)',
-    backDrop: 'rgba(0, 131, 179, 0.3)',
-    tooltipBackground: 'rgba(101, 119, 134, 0.5)',
-    searchBackgroundColor: 'rgb(6, 29, 37)',
-    trendsColor: 'rgb(6, 29, 37)',
-    drawerBackground: 'rgb(6, 29, 37)'
-};
-
-const themeOption = darkTheme;
-
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
+    id: 'light',
     palette: {
         common: {
             blue: BLUE,
@@ -52,6 +44,7 @@ const theme = createMuiTheme({
             hoverColor: LIGHT_BLUE,
             background: themeOption.backgroundColor,
             fontColor: themeOption.fontColor,
+            logoColor: themeOption.logoColor,
             fontGrayColor: themeOption.fontGray,
             borderTextField: themeOption.borderTextField,
             homeBorder: themeOption.homeBorder,
@@ -59,53 +52,59 @@ const theme = createMuiTheme({
             tooltipBackground: themeOption.tooltipBackground,
             searchBackgroundColor: themeOption.searchBackgroundColor,
             trendsColor: themeOption.trendsColor,
-            drawerBackground: themeOption.drawerBackground
+            drawerBackground: themeOption.drawerBackground,
+            inputBorderColor: themeOption.inputBorderColor,
+            labelFontColor: themeOption.labelFontColor,
+            body1FontColor: themeOption.body1FontColor
         },
         primary: {
             main: BLUE
         },
         secondary: {
-            main: BLACK
+            main: '#0F1419'
         }
     },
     typography: {
         h1: {
-            fontFamily: 'Cabin',
+            fontFamily: FONT_FAMILY,
             fontWeight: 800,
-            fontSize: '4.5rem',
-            lineHeight: 1.5,
+            fontSize: '4rem',
+            lineHeight: '5.25rem',
             color: themeOption.fontColor
         },
         h2: {
-            fontFamily: 'Cabin',
-            fontWeight: 700,
+            fontFamily: FONT_FAMILY,
+            fontWeight: 800,
             fontSize: '2.5rem',
-            lineHeight: 1.5,
+            lineHeight: '3.25rem',
             color: themeOption.fontColor
         },
         h3: {
-            fontFamily: 'Cabin',
-            fontSize: '2.5rem',
-            color: BLUE,
+            fontFamily: FONT_FAMILY,
+            fontWeight: 800,
+            fontSize: '1.94rem',
+            lineHeight: '2.25rem',
+            color: themeOption.fontColor
         },
         h4: {
-            fontFamily: 'Cabin',
-            fontSize: '1.75rem',
-            fontWeight: 700,
+            fontFamily: FONT_FAMILY,
+            fontWeight: 800,
+            fontSize: '1.44rem',
+            lineHeight: '1.75rem',
             color: themeOption.fontColor
         },
         h5: {
-            fontFamily: 'Cabin',
+            fontFamily: FONT_FAMILY,
             fontSize: '1.3rem',
-            fontWeight: 600,
+            fontWeight: 700,
             color: themeOption.fontColor
         },
         h6: {
-            fontSize: '0.9rem',
-            fontWeight: 'bold',
-            fontFamily: 'Cabin',
+            fontSize: '1rem',
+            fontWeight: 800,
+            fontFamily: FONT_FAMILY,
             color: themeOption.fontColor,
-            lineHeight: 1
+            lineHeight: '1.25rem'
         },
         subtitle1: {
             fontFamily: 'Cabin',
@@ -121,16 +120,17 @@ const theme = createMuiTheme({
             fontWeight: 400,
         },
         body1: {
-            fontFamily: 'Cabin',
-            fontSize: '1rem',
-            color: themeOption.fontColor,
+            fontFamily: FONT_FAMILY,
+            fontSize: '0.9rem',
+            color: themeOption.body1FontColor,
             fontWeight: 400
         },
         button: {
             textTransform: 'none',
             fontSize: '1rem',
-            fontWeight: 'bold',
-            fontFamily: 'Cabin',
+            fontWeight: 800,
+            lineHeight: '1.25rem',
+            fontFamily: FONT_FAMILY,
             borderRadius: 50,
         }
     },
@@ -150,4 +150,4 @@ const theme = createMuiTheme({
 });
 
  
-export default theme;
+export default lightTheme;

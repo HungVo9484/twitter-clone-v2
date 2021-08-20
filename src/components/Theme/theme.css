@@ -14,8 +14,10 @@ light-blue {color: #e8f5fd}
 dark-blue {color: #0084B4}
 light-blue {color: rgba(26, 70, 97, 0.048)}
 
-DARK_GRAY               {color: rgb(59, 70, 77)}
-backdrop {color: rgba(0, 131, 179, 0.198)}
+DARK_GRAY               {color: #405b77)}
+backdrop {color: rgba(91, 119, 141, 0.198)}
+
+darkRed {color: rgb(224, 0, 0)}
 
 Green {color: rgba(76, 175, 79, 0.39)}
 Pink {color: rgba(233, 30, 98, 0.103)}
