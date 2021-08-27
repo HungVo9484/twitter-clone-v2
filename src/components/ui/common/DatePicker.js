@@ -52,15 +52,12 @@ const DatePicker = ({ onChange, name }) => {
   };
 
   useEffect(() => {
-    // console.log(!days.includes(+date.day));
     if (date.day !== '' && !days.includes(+date.day)) {
       onChange({ ...date, day: '' });
       setDate({ ...date, day: '' });
     }
   }, [date, onChange, days]);
 
-  // console.log(days);
-  // console.log(date);
   return (
     <DateContainer>
       <Select

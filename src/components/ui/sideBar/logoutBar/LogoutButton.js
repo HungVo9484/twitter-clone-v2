@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +14,7 @@ import LogoutCard from './SideBarLogoutCard';
 import LogoutButtonLg from './LogoutButtonLg';
 import LogoutButtonMd from './LogoutButtonMd';
 import AuthContext from '../../../../hooks/auth-context';
+import { logout } from '../../../../store/auth_action';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -55,12 +57,15 @@ const LogoutButton = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchedMD = useMediaQuery(theme.breakpoints.down('md'));
-  const { isShowLogout, showLogout, onLogout } =
+  const { isShowLogout, showLogout } =
     useContext(AuthContext);
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.auth.user)
   const history = useHistory();
 
   const logoutHandler = () => {
-    onLogout(history);
+    dispatch(logout());
+    history.push('/')
   };
 
   const LogoutCardContent = (
@@ -96,9 +101,9 @@ const LogoutButton = () => {
                 marginBottom: '0.2em',
               }}
             >
-              DisplayName
+              {user && user.name}
             </Typography>
-            <Typography variant='subtitle1'>@username</Typography>
+            <Typography variant='subtitle1'>@{user && user.username}</Typography>
           </Grid>
         </Grid>
         <Grid item className={classes.logoutCardCheck}>
@@ -115,7 +120,7 @@ const LogoutButton = () => {
         className={classes.logoutCardOptions}
         onClick={logoutHandler}
       >
-        <Typography variant='body1'>Log out @username</Typography>
+        <Typography variant='body1'>Log out @{user && user.username}</Typography>
       </Grid>
     </Grid>
   );

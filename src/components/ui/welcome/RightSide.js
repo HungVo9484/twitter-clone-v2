@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { ReactComponent as Logo } from '../../../assets/twitterLogo.svg';
-import AuthContext from '../../../hooks/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   rightContainer: {
@@ -51,7 +50,6 @@ const RightSide = (props) => {
   const theme = useTheme();
   const matchedSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchedXS = useMediaQuery(theme.breakpoints.down('xs'));
-  const { themeOption, setTheme } = useContext(AuthContext);
 
   return (
     <Grid

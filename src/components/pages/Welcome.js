@@ -1,8 +1,5 @@
-import React, { useState, useContext } from 'react';
-import {
-  makeStyles,
-  useTheme,
-} from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 
@@ -10,7 +7,6 @@ import Register from '../ui/welcome/Register';
 import Login from '../ui/welcome/Login';
 import LeftSide from '../ui/welcome/LeftSide';
 import RightSide from '../ui/welcome/RightSide';
-import AuthContext from '../../hooks/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -21,22 +17,27 @@ const useStyles = makeStyles((theme) => ({
 
 const Welcome = () => {
   const classes = useStyles();
-  const { onRegister, onLogin } = useContext(AuthContext);
   const theme = useTheme();
-  const matchedSM = useMediaQuery(
-    theme.breakpoints.down('sm')
-  );
+  const matchedSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [openSignup, setOpenSignup] = useState(false);
   const [openSignin, setOpenSignin] = useState(false);
 
   const signupHandler = () => {
     setOpenSignup(true);
-  }
+  };
 
   const signinHandler = () => {
-    setOpenSignin(true)
-  }
+    setOpenSignin(true);
+  };
+
+  const onCloseSignupHandler = () => {
+    setOpenSignup(false);
+  };
+
+  const onCloseSigninHandler = () => {
+    setOpenSignin(false);
+  };
 
   return (
     <Grid
@@ -46,9 +47,12 @@ const Welcome = () => {
       className={classes.mainContainer}
     >
       <LeftSide />
-      <RightSide onClickSignup={signupHandler} onClickSignin={signinHandler} />
-      {openSignup && <Register />}
-      {openSignin && <Login />}
+      <RightSide
+        onClickSignup={signupHandler}
+        onClickSignin={signinHandler}
+      />
+      {openSignup && <Register onClose={onCloseSignupHandler} />}
+      {openSignin && <Login onClose={onCloseSigninHandler} />}
     </Grid>
   );
 };

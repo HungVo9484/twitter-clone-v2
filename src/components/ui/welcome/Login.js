@@ -1,13 +1,11 @@
-import React, {
-  useState,
-  useEffect,
-  useReducer,
-  useContext,
-} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { withTheme, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
 import InputFloat from '../common/InputFloat';
 import { ReactComponent as Logo } from '../../../assets/twitterLogo.svg';
@@ -15,7 +13,7 @@ import {
   emailReducer,
   passwordReducer,
 } from '../../../hooks/validatedReducer';
-import AuthContext from '../../../hooks/auth-context';
+import { login } from '../../../store/auth_action';
 
 const BackDrop = withTheme(styled.div`
   position: fixed;
@@ -30,6 +28,7 @@ const BackDrop = withTheme(styled.div`
 
 const RegisterContainer = withTheme(styled.div`
   position: relative;
+  z-index: 2001;
   margin: auto;
   width: 25rem;
   background: ${(p) => p.theme.palette.common.background};
@@ -42,6 +41,15 @@ const RegisterContainer = withTheme(styled.div`
   .logo {
     width: 3rem;
     margin-bottom: 2rem;
+  }
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: ${(p) => p.theme.palette.primary.main};
+    &:hover {
+      color: ${(p) => p.theme.palette.primary.dark};
+    }
   }
   .title {
     ${(p) => p.theme.typography.h4}
@@ -94,10 +102,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
-
-  const { onLogin } = useContext(AuthContext);
+  const { isLoading, error } = useSelector((state) => state.utils);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [formIsValid, setFormIsValid] = useState(false);
@@ -142,15 +150,29 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    onLogin(email.value, password.value, history)
+    dispatch(login(email.value, password.value, history));
   };
 
   return (
     <BackDrop>
       <RegisterContainer>
         <div className='logo'>
-          <TwitterLogo />
+          {isLoading ? (
+            <CircularProgress size={40} />
+          ) : (
+            <TwitterLogo />
+          )}
         </div>
+        <CloseOutlinedIcon
+          className='close'
+          onClick={props.onClose}
+        />
+        {error &&
+          error.map((err) => (
+            <div key={err.msg} className='error'>
+              {err.msg}
+            </div>
+          ))}
         <div className='title'>Log in to Twitter</div>
         <form className='registerForm' onSubmit={submitHandler}>
           <InputFloat
@@ -174,7 +196,7 @@ const Login = () => {
             error={
               passwordValid !== false
                 ? false
-                : 'PLease enter password at least 7 characters!'
+                : 'PLease enter password at least 6 characters!'
             }
             onChange={passwordChangedHandler}
             onBlur={validatePasswordHandler}

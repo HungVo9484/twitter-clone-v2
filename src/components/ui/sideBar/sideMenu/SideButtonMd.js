@@ -19,7 +19,6 @@ const SideButtonMd = ({option, index, value, onClick}) => {
   const theme = useTheme();
   const matchedMD_height = useMediaQuery('(max-height:45em)');
   const matchedSM_height = useMediaQuery('(max-height:38em)');
-console.log(option);
   return (
     <CssTooltip enterDelay={ 300 } enterNextDelay={ 300 } title={ option.title }>
       <IconButton

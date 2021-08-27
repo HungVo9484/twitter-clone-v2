@@ -1,20 +1,35 @@
-import React, { useState, useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
+import React, { useState, useContext, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 
 import Welcome from './pages/Welcome';
 import Main from './ui/Main';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import AuthContext from '../hooks/auth-context';
 import { Toggle } from './ui/common/Toggle';
+import AuthContext from '../hooks/auth-context';
+import { authActions } from '../store/auth_slice';
+import EditProfile from './ui/profile/EditProfile/EditProfile';
+import { loadUser } from '../store/auth_action';
 
+
+// if (localStorage.token) {
+//   setAuthToken(localStorage.token);
+// }
 
 function App() {
-  const theme = useTheme();
-  const { isAuthenticated, themeOption, setTheme } = useContext(AuthContext);
+  const {themeOption, setTheme} = useContext(AuthContext)
+  const isAuth = useSelector(state => state.auth.isAuthenticated)
+  const {showEditProfile} = useSelector(state => state.utils)
   const [openDrawer, setOpenDrawer] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(authActions.login());
+    }
+  },[dispatch])
 
   const toggleDrawerHandler = () => {
     setOpenDrawer(!openDrawer);
@@ -22,7 +37,7 @@ function App() {
 
   let routes;
 
-  if (isAuthenticated) {
+  if (isAuth) {
     routes = (
       <Main
         openDrawer={openDrawer}
@@ -32,7 +47,7 @@ function App() {
           <Route path='/home' exact>
             <Home toggleDrawerHandler={toggleDrawerHandler} />
           </Route>
-          <Route path='/username' exact>
+          <Route path='/:username' exact>
             <Profile />
           </Route>
         </Switch>
@@ -44,9 +59,9 @@ function App() {
         <Route path='/' exact>
           <Welcome />
         </Route>
-        <Route path='/'>
+        {/* <Route path='/'>
           <Redirect to='/' />
-        </Route>
+        </Route> */}
       </Switch>
     );
   }
@@ -56,7 +71,8 @@ function App() {
       <div
         style={{ backgroundColor: themeOption.palette.common.background }}
       >
-        <Toggle isActive={themeOption.id === 'dark'} onToggle={setTheme} />
+        <Toggle isActive={ themeOption.id === 'dark' } onToggle={ setTheme } />
+        {showEditProfile && <EditProfile />}
         {routes}
       </div>
     </ThemeProvider>

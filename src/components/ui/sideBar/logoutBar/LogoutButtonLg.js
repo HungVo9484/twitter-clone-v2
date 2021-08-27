@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -31,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 const LogoutButtonLg = () => {
   const classes = useStyles();
-  const {showLogout} = useContext(AuthContext)
+  const { showLogout } = useContext(AuthContext)
+  const user = useSelector(state => state.auth.user)
+  
   return (
     <Grid item>
     <Button
@@ -54,9 +57,9 @@ const LogoutButtonLg = () => {
                 marginBottom: "0.2em",
               } }
             >
-              DisplayName
+              {user && user.name}
             </Typography>
-            <Typography variant="subtitle1">@username</Typography>
+            <Typography variant="subtitle1">@{user && user.username}</Typography>
           </Grid>
         </Grid>
       </Grid>

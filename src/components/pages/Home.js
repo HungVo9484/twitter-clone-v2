@@ -1,13 +1,15 @@
-import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { makeStyles, useTheme,  } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import HomeAppBar from "../ui/home/AppBarHome";
 import TweetBox from "../ui/home/TweetBox";
-import Posts from "../ui/Posts";
+import Posts from "../ui/Posts/Post";
 import TopAppBarMobile from "../ui/AppBarMobileTop";
 import AppBarMobileBottom from "../ui/AppBarMobileBottom";
+import { loadUser } from '../../store/auth_action';
 
 const useStyles = makeStyles((theme) => ({
   homeContainer: {
@@ -30,8 +32,14 @@ export default function Home(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchedXS = useMediaQuery(theme.breakpoints.down("xs"));
+  const dispatch = useDispatch();
 
-  console.log(props);
+  useEffect(() => {
+    console.log('Home vo dy ko');
+    if (localStorage.getItem('token')) {
+      dispatch(loadUser())
+    }
+  },[dispatch])
   return (
     <Grid
       item

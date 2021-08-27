@@ -6,7 +6,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import AppBarProfile from '../ui/profile/AppBarProfile';
 import UserProfile from '../ui/profile/UserProfile';
 import ProfileButton from '../ui/profile/NavProfile';
-import Posts from '../ui/Posts';
+import Posts from '../ui/Posts/Post';
 import AppBarMobileBottom from '../ui/AppBarMobileBottom';
 
 const useStyles = makeStyles((theme) => ({

@@ -5,14 +5,12 @@ export const usernameReducer = (state, action) => {
     case 'USER_INPUT':
       return {
         value: val,
-        isValid: !val.includes(' ') && val.trim().length > 0,
+        isValid: val.trim().length > 5,
       };
     case 'INPUT_BLUR':
       return {
         value: state.value,
-        isValid:
-          !state.value.includes(' ') &&
-          state.value.trim().length > 0,
+        isValid: state.value.trim().length > 5,
       };
     default:
       return state;
@@ -40,12 +38,12 @@ export const passwordReducer = (state, action) => {
     case 'USER_INPUT':
       return {
         value: val,
-        isValid: val.trim().length > 6,
+        isValid: val.trim().length > 5,
       };
     case 'INPUT_BLUR':
       return {
         value: state.value,
-        isValid: state.value.trim().length > 6,
+        isValid: state.value.trim().length > 5,
       };
     default:
       return state;
@@ -59,12 +57,12 @@ export const birthdayReducer = (state, action) => {
   switch (type) {
     case 'USER_INPUT':
       if (day === '' || month === '' || year === '') {
-        return { value: '', isValid: false }
+        return { value: '', isValid: false };
       }
-      const date = new Date(+year, month, +day)
+      const date = new Date(+year, month, +day);
       console.log(date);
-      return { value: date, isValid: true }
+      return { value: date, isValid: true };
     default:
       return state;
   }
-}
+};

@@ -3,14 +3,15 @@ import lightTheme from '../components/Theme/lightTheme';
 import darkTheme from '../components/Theme/darkTheme';
 
 const AuthContext = React.createContext({
+  url: 'http://127.0.0.1:5000',
   isAuthenticated: false,
   isShowLogout: false,
   themeOption: lightTheme,
   onRegister: (name, email, password, birthday, history) => {},
   onLogin: (email, password, history) => {},
   onLogout: (history) => {},
-  showLogout: () => { },
-  setTheme: () => {}
+  showLogout: () => {},
+  setTheme: () => {},
 });
 
 export default AuthContext;
@@ -22,22 +23,14 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log('auth', token);
     if (token) {
       setIsLoggedIn(true);
     }
   }, []);
 
-  const registerHandler = (
-    name,
-    email,
-    password,
-    birthday,
-    history
-  ) => {
-    localStorage.setItem('token', '1');
+  const registerHandler = (token, history) => {
+    localStorage.setItem('token', token);
     setIsLoggedIn(true);
-    console.log(name, email, password, birthday);
     history.push('/home');
   };
 
@@ -45,7 +38,7 @@ export const AuthContextProvider = (props) => {
     localStorage.setItem('token', '1');
     setIsLoggedIn(true);
     console.log(email, password);
-    history.push('/home')
+    history.push('/home');
   };
 
   const logoutHandler = (history) => {
@@ -56,16 +49,19 @@ export const AuthContextProvider = (props) => {
 
   const showLogoutHandler = () => {
     console.log('click showLogout', showLogout);
-    setShowLogout(!showLogout)
-  }
+    setShowLogout(!showLogout);
+  };
 
   const setThemeHandler = () => {
-    setTheme(theme => theme.id === 'light' ? darkTheme : lightTheme)
-  }
+    setTheme((theme) =>
+      theme.id === 'light' ? darkTheme : lightTheme
+    );
+  };
 
   return (
     <AuthContext.Provider
       value={{
+        url: 'http://127.0.0.1:5000',
         isAuthenticated: isLoggedIn,
         isShowLogout: showLogout,
         themeOption: theme,
@@ -73,7 +69,7 @@ export const AuthContextProvider = (props) => {
         onLogin: loginHandler,
         onLogout: logoutHandler,
         showLogout: showLogoutHandler,
-        setTheme: setThemeHandler
+        setTheme: setThemeHandler,
       }}
     >
       {props.children}

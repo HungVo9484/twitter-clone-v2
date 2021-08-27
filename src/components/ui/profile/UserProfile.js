@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,9 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
 
 import bikini from '../../../assets/bikini.jpg';
+import { utilsActions } from '../../../store/utils_slice';
+
 
 const ImageCover = styled.div`
-  background-image: url(${p => p.imageUrl});
+  background-image: url(${(p) => p.imageUrl});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -23,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '12.5em',
     [theme.breakpoints.down('xs')]: {
-      height: '9em'
-    }
+      height: '9em',
+    },
   },
   userProfileContainer: {
     paddingTop: '1em',
     paddingLeft: '1em',
-    paddingRight: '1em'
+    paddingRight: '1em',
   },
   avatarProfile: {
     width: theme.spacing(17),
@@ -41,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(6),
       marginTop: '-2em',
       border: `0.1em solid ${theme.palette.common.background}`,
-    }
+    },
   },
   btnEditProfile: {
     ...theme.typography.button,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '0.9rem'
+      fontSize: '0.9rem',
     },
     '&:hover': {
-      backgroundColor: theme.palette.common.hoverColor
-    }
+      backgroundColor: theme.palette.common.hoverColor,
+    },
   },
   displayName: {
     paddingTop: '0.5em',
@@ -65,35 +68,49 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5em',
   },
   eventIcon: {
-    color: theme.palette.common.fontColor
+    color: theme.palette.common.fontColor,
   },
   follow: {
     paddingTop: '0.5em',
     paddingBottom: '0.5em',
-  }
-
+  },
 }));
 
 export default function UserProfile() {
   const classes = useStyles();
+  const dispatch = useDispatch()
+
+  const onEditProfileHandler = () => {
+    dispatch(utilsActions.showEditProfile())
+  };
+
+
 
   return (
     <Grid item container direction='column'>
-      <Grid item className={ classes.imageCoverItem }>
-        <ImageCover imageUrl={ bikini } />
+      <Grid item className={classes.imageCoverItem}>
+        <ImageCover imageUrl={bikini} />
       </Grid>
-      <Grid item container direction='column' className={classes.userProfileContainer}>
+      <Grid
+        item
+        container
+        direction='column'
+        className={classes.userProfileContainer}
+      >
         <Grid item container justify='space-between'>
           <Grid item>
-            <Avatar className={ classes.avatarProfile } />
+            <Avatar className={classes.avatarProfile} />
           </Grid>
           <Grid item>
             <Button
               variant='outlined'
               color='primary'
               disableRipple
-              className={ classes.btnEditProfile }
-            >Edit Profile</Button>
+              className={classes.btnEditProfile}
+              onClick={onEditProfileHandler}
+            >
+              Edit Profile
+            </Button>
           </Grid>
         </Grid>
         <Grid item className={classes.displayName}>
@@ -104,7 +121,7 @@ export default function UserProfile() {
           <Typography variant='h6'>Yeu doi yeu nguoi</Typography>
         </Grid>
         <Grid item container className={classes.event}>
-          <EventOutlinedIcon className={ classes.eventIcon}/>
+          <EventOutlinedIcon className={classes.eventIcon} />
           <Typography>Joined April 2020</Typography>
         </Grid>
         <Grid item className={classes.follow}>
